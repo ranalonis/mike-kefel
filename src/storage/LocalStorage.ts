@@ -59,7 +59,13 @@ export class LocalStorage implements Storage {
     this.write(KEYS.settings, sanitizeSettings(settings));
   }
 
+  // Read-modify-write is kept synchronous (no await in between) so overlapping saves can't lose data.
+
   async getHistory(): Promise<History> {
+    return this.readHistory();
+  }
+
+  private readHistory(): History {
     const raw = this.read(KEYS.history);
     const out: History = {};
     if (!raw || typeof raw !== "object") return out;
@@ -75,12 +81,16 @@ export class LocalStorage implements Storage {
   }
 
   async saveDay(dayKey: string, record: DayRecord): Promise<void> {
-    const history = await this.getHistory();
+    const history = this.readHistory();
     history[dayKey] = record;
     this.write(KEYS.history, history);
   }
 
   async getMistakes(): Promise<Mistakes> {
+    return this.readMistakes();
+  }
+
+  private readMistakes(): Mistakes {
     const raw = this.read(KEYS.mistakes);
     const out: Mistakes = {};
     if (!raw || typeof raw !== "object") return out;
@@ -91,7 +101,7 @@ export class LocalStorage implements Storage {
   }
 
   async saveMistake(exerciseKey: string, count: number): Promise<void> {
-    const mistakes = await this.getMistakes();
+    const mistakes = this.readMistakes();
     if (count > 0) mistakes[exerciseKey] = count;
     else delete mistakes[exerciseKey];
     this.write(KEYS.mistakes, mistakes);

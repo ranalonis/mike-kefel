@@ -9,11 +9,9 @@ import "@fontsource/rubik/hebrew-800.css";
 import "@fontsource/rubik/latin-800.css";
 import "./styles.css";
 
-import dadHappy from "./assets/dad-happy.jpg";
+import { startApp } from "./app";
+import { LocalStorage } from "./storage/LocalStorage";
 
-// Placeholder until the screens are ported (step 3).
-const app = document.getElementById("app")!;
-app.innerHTML = `
-  <h1 class="greet">מייק-כפל</h1>
-  <p class="center">השלד עובד. <span class="num">7 × 8 = 56</span></p>
-  <div class="dad"><img src="${dadHappy}" alt="אבא שמח"></div>`;
+const storage = new LocalStorage();
+const root = document.getElementById("app")!;
+storage.getSettings().then((settings) => startApp(root, storage, settings));
