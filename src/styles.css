@@ -26,7 +26,9 @@ html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;min-height:100%;background:var(--sky);color:var(--ink);
   font-family:"Varela Round","Rubik","Arial Hebrew","Segoe UI",Arial,sans-serif;font-size:18px;line-height:1.5}
 button,input,select{font:inherit;color:inherit}
-button{cursor:pointer}
+button{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.keypad{user-select:none;-webkit-user-select:none}
+.version{text-align:center;color:var(--muted);font-size:.8rem;margin:18px 0 0}
 :focus-visible{outline:3px solid var(--rust);outline-offset:3px}
 .num{font-family:"Rubik","Segoe UI",Arial,sans-serif;font-weight:700;direction:ltr;unicode-bidi:isolate}
 #app{max-width:520px;margin:0 auto;padding:20px 18px 28px;min-height:100vh;display:flex;flex-direction:column}

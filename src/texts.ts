@@ -75,5 +75,6 @@ export const T = {
     sound: "צלילים",
     save: "שמור הגדרות",
     saved: "ההגדרות נשמרו",
+    version: "גרסה",
   },
 } as const;

@@ -29,7 +29,8 @@ export const settingsScreen: Screen = (ctx) => {
       ${row("maxTable", T.settings.maxTable, select("maxTable", s.maxTable))}
       ${row("sound", T.settings.sound, `<button class="switch" role="switch" id="sound" aria-checked="${s.sound}"></button>`)}
     </div>
-    <button class="btn" id="saveSettings">${T.settings.save}</button>`;
+    <button class="btn" id="saveSettings">${T.settings.save}</button>
+    <p class="version">${T.settings.version} <span class="num">${__APP_VERSION__}</span></p>`;
 
   const root = ctx.root;
   const sound = $(root, "#sound");

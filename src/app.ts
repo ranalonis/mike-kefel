@@ -1,3 +1,4 @@
+import { setUpdateSafe } from "./pwa";
 import type { Settings } from "./settings";
 import type { Storage } from "./storage/Storage";
 import { homeScreen } from "./screens/home";
@@ -47,6 +48,7 @@ export function startApp(root: HTMLElement, storage: Storage, initialSettings: S
     const prev = cleanup;
     cleanup = null;
     prev?.(); // stops timers/listeners and may register a final write
+    setUpdateSafe(false);
     const id = ++navId;
     await pending;
     if (id !== navId) return;
@@ -70,7 +72,11 @@ export function startApp(root: HTMLElement, storage: Storage, initialSettings: S
     window.scrollTo(0, 0);
     const c = await SCREENS[name](ctx, params);
     if (id !== navId) c?.(); // navigated away while it was rendering
-    else cleanup = c ?? null;
+    else {
+      cleanup = c ?? null;
+      // pending saves are done (awaited above), so reloading for an update is harmless here
+      if (name === "home") setUpdateSafe(true);
+    }
   }
 
   root.addEventListener("click", (e) => {

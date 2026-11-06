@@ -10,7 +10,11 @@ import "@fontsource/rubik/latin-800.css";
 import "./styles.css";
 
 import { startApp } from "./app";
+import { registerPwa, requestPersistentStorage } from "./pwa";
 import { LocalStorage } from "./storage/LocalStorage";
+
+registerPwa();
+requestPersistentStorage();
 
 const storage = new LocalStorage();
 const root = document.getElementById("app")!;
